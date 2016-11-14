@@ -4,7 +4,6 @@ Image generation with MATLAB
     written by Yukiyasu Kamitani, April 16, 1999
     modified by Mitsuaki Tsukamoto, November 15, 2016
 
-Methods to generate 2D images as matrices using MATLAB are described.  3D graphics is not covered here. 
 Advantages of using MATLAB for image generation are:
 
 - image as matrix: operation of images without "for" loop
@@ -12,6 +11,7 @@ Advantages of using MATLAB for image generation are:
 - mathematical transformation and analysis, combined with Image Processing Toolbox and Signal Processing Toolbox
 - psychophysical experiment, combined with Psychophysics Toolbox (only for Mac)
 
+Methods to generate 2D images as matrices using MATLAB are described here.  3D graphics is not covered. 
 
 ----------------------
 ### Basics of image generation with MATLAB (Image Processing Toolbox required)
@@ -22,7 +22,7 @@ White square (100x100 pix)
     image = ones([100 100]);
     imshow(image);
 
-    By default, 0 -> black, 1 -> white.
+    % By default, 0 -> black, 1 -> white.
      
 Random-dot
 
@@ -46,19 +46,19 @@ Circle
 #### Index color
 Assign color by defining a color map (256x3).
 
-    index  [ R     G      B]       (R, G, B = 0 - 1)
-        1  [ 0     0      0]
-        2  [ 0.1   0      1]
-                   :
-                   :
-       256 [ 0     1     0.5]
+    %index  [ R     G      B]       (R, G, B = 0 - 1)
+    %    1  [ 0     0      0]
+    %    2  [ 0.1   0      1]
+    %               :
+    %               :
+    %   256 [ 0     1     0.5]
 
     image = ones([100 100]);    % square composed of index "1"s
     colormap = [0:1/255:1]' * ones(1,3);   % black (1)- white(256)
     colormap(1,:) = [1 0 0]; % index "1" -> red
     imshow(image, colormap);
 
-#### Image analysis and processing
+#### Image analysis and processing (FFT and Convolution)
 
 <img src="https://github.com/KamitaniLab/ImageTools/blob/master/Pixel.jpg" alt="img">
 Pixel.jpg
@@ -83,58 +83,80 @@ Pixel.jpg
     figure(4); imshow(ampFilterImage,  [0  10000 ]);
 ---------------------------------
 ### Yuki Kamitani's image tools
+This repository contains Matlab functions to generate pattern images and basic figures.
+Here is a list of the functions and basic usage.
 
 #### pattern
 
-    Sine grating: imageMatrix = sinGrating(vhSize, cyclesPer100Pix, orientation, phase, mean, amplitude)
+Sine grating: 
 
+    imageMatrix = sinGrating(vhSize, cyclesPer100Pix, orientation, phase, mean, amplitude)
+     
     e.g.,
     imshow(sinGrating([100 100], 5, 45, 0, 0.5, 0.5));
      
-    Concentric sine pattern: imageMatrix = sinConcentric(vhSize, cyclePer100pix, phase, mean, amplitude)
+Concentric sine pattern: 
 
+    imageMatrix = sinConcentric(vhSize, cyclePer100pix, phase, mean, amplitude)
+     
     e.g.,
     imshow(sinConcentric([100 100], 10, 0, 0.5, 0.5));
      
-    Gabor patch: imageMatrix = gabor(vhSize, cyclesPer100Pix,orientation, phase, sigma , mean, amplitude)
-
+Gabor patch: 
+    
+    imageMatrix = gabor(vhSize, cyclesPer100Pix,orientation, phase, sigma , mean, amplitude)
+     
     e.g.,
     imshow(gabor([100 100], 8, 45, 0, 6 , 0.5, 0.5));
      
-    Random dots: imageMatrix = randDot(vhSize, dotSize, dotCol, backCol, density);
+Random dots:
 
+    imageMatrix = randDot(vhSize, dotSize, dotCol, backCol, density);
+     
     e.g.,
     imshow(randDot([100 100], 5, 1, 0, 0.3));
 
 #### drawing
 
-    Filled oval: imageMatrix = drawOvalFill(BaseIm, TopLeft_BotRight, foreground)
+Filled oval: 
 
+    imageMatrix = drawOvalFill(BaseIm, TopLeft_BotRight, foreground)
+     
     e.g.,
     imshow(drawOvalFill(ones(150, 150), [50 50 90 90], 0.5));
 
-    Frame Oval: imageMatrix = drawOvalFrame(BaseIm, TopLeft_BotRight, foreground, frameWidth)
+Frame Oval: 
 
+    imageMatrix = drawOvalFrame(BaseIm, TopLeft_BotRight, foreground, frameWidth)
+     
     e.g.,
     imshow(drawOvalFrame(ones(150, 150), [50 50 90 90], 0.5, 3));
 
-    Filled Rectangle: imageMatrix = drawRectFill(BaseIm, TopLeft_BotRight, foreground)
+Filled Rectangle: 
 
+    imageMatrix = drawRectFill(BaseIm, TopLeft_BotRight, foreground)
+     
     e.g.,
     imshow(drawRectFill(zeros (100,100), [20 20 50 50], 1));
 
-    Frame rectangle: imageMatrix = drawRectFrame(BaseIm, TopLeft_BotRight, foreground, frameWidth)
+Frame rectangle: 
 
+    imageMatrix = drawRectFrame(BaseIm, TopLeft_BotRight, foreground, frameWidth)
+     
     e.g.,
     imshow(drawRectFrame(zeros (100,100), [20 20 50 50], 1,1));
 
-    Line: imageMatrix = drawLines(BaseIm, startPos_endPos, foreground, PenSize)
+Line: 
 
+    imageMatrix = drawLines(BaseIm, startPos_endPos, foreground, PenSize)
+     
     e.g.,
     imshow(drawLines(zeros(200,200), [100 100  180 140], 0.5, [2 2]));
 
-    Polygon: imageMatrix = drawPolygon(BaseIm, dotPos, foreground)
+Polygon: 
 
+    imageMatrix = drawPolygon(BaseIm, dotPos, foreground)
+     
     e.g.,
     imshow(drawPolygon(ones(100,100), [10 10 ; 90 30 ;  90 90], 0.5));
 
@@ -145,7 +167,7 @@ contains subfunctions used in the functions in 'pattern' and 'drawing'
 =============================================================
 #### Examples
 
-    Neon color spreading
+Neon color spreading
 
     radiusDisk = 35; % radius of disks
     diskImage = drawOvalFill(zeros(200, 200), [50 50 50 50]+radiusDisk*[-1 -1 1 1], 1);
