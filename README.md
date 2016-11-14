@@ -1,6 +1,9 @@
 Image generation with MATLAB
 ===============
 
+    written by Yukiyasu Kamitani, April 16, 1999
+    modified by Mitsuaki Tsukamoto, November 15, 2016
+
 Methods to generate 2D images as matrices using MATLAB are described.  3D graphics is not covered here. 
 Advantages of using MATLAB for image generation are:
 
@@ -9,6 +12,8 @@ Advantages of using MATLAB for image generation are:
 - mathematical transformation and analysis, combined with Image Processing Toolbox and Signal Processing Toolbox
 - psychophysical experiment, combined with Psychophysics Toolbox (only for Mac)
 
+
+----------------------
 ### Basics of image generation with MATLAB (Image Processing Toolbox required)
 #### Basic image generation
 
@@ -55,7 +60,7 @@ Assign color by defining a color map (256x3).
 
 #### Image analysis and processing
 
-<img src="https://github.com/KamitaniLab/figures/blob/master/NeuralCodeConverter.jpg" alt="img" width="650" height="520">
+<img src="https://github.com/KamitaniLab/ImageTools/blob/master/Pixel.jpg" alt="img">
 Pixel.jpg
 
     % Load jpeg files
@@ -76,13 +81,10 @@ Pixel.jpg
     fftFilterImage = fftshift(fft2(filterImage));
     ampFilterImage= abs(fftFilterImage);
     figure(4); imshow(ampFilterImage,  [0  10000 ]);
+---------------------------------
+### Yuki Kamitani's image tools
 
-Yuki Kamitani's image tools
-Download
-    YkImageTools.tar.gz
-    YkImageTools.sea.hqx
-
-pattern
+#### pattern
 
     Sine grating: imageMatrix = sinGrating(vhSize, cyclesPer100Pix, orientation, phase, mean, amplitude)
 
@@ -104,7 +106,7 @@ pattern
     e.g.,
     imshow(randDot([100 100], 5, 1, 0, 0.3));
 
-drawing
+#### drawing
 
     Filled oval: imageMatrix = drawOvalFill(BaseIm, TopLeft_BotRight, foreground)
 
@@ -137,10 +139,11 @@ drawing
     imshow(drawPolygon(ones(100,100), [10 10 ; 90 30 ;  90 90], 0.5));
 
 
-tool
-comtains subfunctions used in the functions in 'pattern' and 'drawing'
+#### tool
+contains subfunctions used in the functions in 'pattern' and 'drawing'
 
-Examples
+=============================================================
+#### Examples
 
     Neon color spreading
 
@@ -169,7 +172,9 @@ Examples
     figure(1); imshow(leftImage);
     figure(2); imshow(rightImage);
 
-Psychophysics Toolbox (only for Mac)
+
+------------------------------------------
+### Psychophysics Toolbox 
 
 Image matrices can be used for presenting visual stimuli with Psychophysics Toolbox. Instead of imshow(imageMatrix) :
 
@@ -182,17 +187,4 @@ Color map can be defined by:
 Color values in color map of Psychophysics Toolbox are 0-255, not 0-1.
 
 [Psychophysics Toolbox Home](http://psychtoolbox.org/download/)
-
-
-written by Yukiyasu Kamitani, kamitani@percipi.caltech.edu
-Last Modified: April 16, 1999
-
-
-## Copyright and License:
-
-Copyright (c) Yukiyasu Kamitani
-
-The program codes provided here are released under the MIT license
-(http://opensource.org/licenses/mit-license.php)
-
 
